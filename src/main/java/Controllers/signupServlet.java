@@ -28,7 +28,7 @@ public class signupServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.getRequestDispatcher(request.getContextPath() + "/JSP/Authentication/signup.jsp").forward(request, response);
+        request.getRequestDispatcher("/JSP/Authentication/signup.jsp").forward(request, response);
 
     }
 
