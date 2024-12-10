@@ -13,16 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="D:/Mon Hoc/Lap trinh/HocJava/mysql-connector-j-8.2.0/mysql-connector-j-8.2.0.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="D:/Mon Hoc/Lap trinh/HocJava/MathTools2/src/main/webapp/WEB-INF/lib/gson-2.11.0.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="D:/Mon Hoc/Lap trinh/HocJava/MathTools2/src/main/webapp/WEB-INF/lib/aspose-words-24.11-jdk17.jar"/>
+
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
