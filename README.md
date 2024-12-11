@@ -48,7 +48,7 @@ https://github.com/BoPDA1607/PdfToDocx
 
 **Hướng dẫn chi tiết**
 
-![Watch the video](https://youtu.be/AJlqkaTask8)
+!(https://youtu.be/AJlqkaTask8)
 
 ## Chúc may mắn
 Chúc bạn thành công trong việc triển khai và phát triển hệ thống! 
