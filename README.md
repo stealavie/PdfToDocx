@@ -1,55 +1,60 @@
-# Trang web chuyển đổi PDF sang DOCX sử dụng Java Servlet
+# Trang Web Chuyển Đổi PDF Sang DOCX Sử Dụng Java Servlet
 
-## Giới thiệu đề tài
+## Giới Thiệu Đề Tài
 
-Đề tài này xây dựng một trang web hỗ trợ chuyển đổi file PDF sang định dạng DOCX. Hệ thống sử dụng công nghệ Java Servlet và được chia thành 2 server hoạt động song song:
+Đề tài này tạo ra một trang web giúp người dùng chuyển đổi file PDF sang định dạng DOCX. Hệ thống được xây dựng trên nền tảng Java Servlet, với cấu trúc gồm 2 server hoạt động song song:
 
-1. **Server 1 - Giao diện người dùng (UI Server)**: Server này chịu trách nhiệm xử lý giao diện người dùng, tiếp nhận file PDF từ người dùng và hiển thị kết quả trả về dưới dạng file DOCX. Server này sử dụng mô hình **MVC** (Model-View-Controller) để quản lý và phân phối công việc giữa các thành phần của hệ thống.
-
-2. **Server 2 - Server xử lý dữ liệu (Processing Server)**: Server này thực hiện công việc chuyển đổi từ PDF sang DOCX. Khi nhận được yêu cầu từ Server 1, Server 2 sẽ tiến hành xử lý file PDF và trả lại kết quả cho Server 1. Server này sẽ luôn chạy ngầm và liên tục lắng nghe các yêu cầu từ Server 1.
-
----
-
-## Thiết kế hệ thống
-
-![image](./asset/image/systemArchitecture.png)
+1. **Server 1 - Giao Diện Người Dùng (UI Server)**: Xử lý giao diện người dùng, tiếp nhận file PDF và trả về kết quả là file DOCX. Server này sử dụng mô hình **MVC** (Model-View-Controller) để quản lý luồng công việc.
+   
+2. **Server 2 - Server Xử Lý Dữ Liệu (Processing Server)**: Chịu trách nhiệm chuyển đổi file PDF sang DOCX. Khi nhận yêu cầu từ Server 1, Server 2 sẽ thực hiện chuyển đổi và gửi kết quả trả lại.
 
 ---
 
-## Hướng dẫn cài đặt
+## Thiết Kế Hệ Thống
 
-Để triển khai và sử dụng hệ thống, bạn cần thực hiện các bước cài đặt sau:
+![Kiến trúc hệ thống](./asset/image/systemArchitecture.png)
 
-### 1. Cài đặt JDK
+---
 
-Để phát triển ứng dụng Java, bạn cần cài đặt **JDK** (Java Development Kit). Các bước cài đặt JDK như sau:
+## Hướng Dẫn Cài Đặt
 
-1. Truy cập trang chính của Oracle để tải JDK tại [https://www.oracle.com/java/technologies/javase-downloads.html](https://www.oracle.com/java/technologies/javase-downloads.html).
-2. Chọn phiên bản JDK phù hợp với máy tính của bạn.
-3. Tải về và chạy trình cài đặt theo hướng dẫn. 
+Để triển khai hệ thống, bạn cần làm theo các bước cài đặt sau:
 
-### 2. Cài đặt Eclipse IDE
+### 1. Cài Đặt JDK
 
-Để phát triển ứng dụng Java Servlet, bạn cần cài đặt **Eclipse IDE**. Truy cập trang chủ của Eclipse tại [https://www.eclipse.org/](https://www.eclipse.org/) và tải xuống phiên bản phù hợp với hệ điều hành của bạn. Sau khi cài đặt, mở Eclipse để bắt đầu cấu hình môi trường.
+Đầu tiên, bạn cần cài **JDK** (Java Development Kit) để phát triển ứng dụng Java:
 
-**Phiên bản bắt buộc**
+1. Truy cập [Oracle JDK Downloads](https://www.oracle.com/java/technologies/javase-downloads.html).
+2. Tải và cài đặt phiên bản JDK phù hợp với hệ điều hành của bạn.
 
-![image](./asset/image/eclipseVersion.png)
+### 2. Cài Đặt Eclipse IDE
 
-### 3. Cài đặt XAMPP
+Sử dụng **Eclipse IDE** để phát triển ứng dụng Java Servlet:
 
-Để chạy server web (Apache) và quản lý cơ sở dữ liệu (MySQL), bạn cần cài đặt **XAMPP**. Tải XAMPP tại: [https://www.apachefriends.org/](https://www.apachefriends.org/) và làm theo hướng dẫn cài đặt.
+1. Truy cập [Eclipse Downloads](https://www.eclipse.org/).
+2. Tải và cài đặt phiên bản phù hợp với hệ điều hành của bạn.
 
-### 4. Clone dự án
+**Lưu ý**: Sử dụng phiên bản Eclipse yêu cầu trong tài liệu.
+
+![Eclipse Version](./asset/image/eclipseVersion.png)
+
+### 3. Cài Đặt XAMPP
+
+Cài đặt **XAMPP** để chạy Apache server và quản lý cơ sở dữ liệu MySQL:
+
+1. Truy cập [XAMPP Downloads](https://www.apachefriends.org/).
+2. Làm theo hướng dẫn cài đặt.
+
+### 4. Clone Dự Án
+
+Clone mã nguồn từ GitHub về máy:
 
 ```
-https://github.com/BoPDA1607/PdfToDocx
+git clone https://github.com/BoPDA1607/PdfToDocx
 ```
 
-**Hướng dẫn chi tiết**
+**Hướng dẫn chi tiết**: [Video hướng dẫn](https://youtu.be/AJlqkaTask8)
 
-https://youtu.be/AJlqkaTask8
+---
 
-## Chúc may mắn
-Chúc bạn thành công trong việc triển khai và phát triển hệ thống! 
-
+Chúc bạn thành công khi triển khai hệ thống!
