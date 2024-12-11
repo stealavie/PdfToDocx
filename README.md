@@ -12,7 +12,7 @@
 
 ## Thiết kế hệ thống
 
-![image](https://github.com/user-attachments/assets/b8b4bcac-e739-4188-a5ba-17447d47232d)
+![image](./asset/image/systemArchitecture.png)
 
 ---
 
@@ -34,36 +34,22 @@
 
 **Phiên bản bắt buộc**
 
-![image](https://github.com/user-attachments/assets/f06f195b-9729-442b-9fdb-867ef4a279e8)
+![image](./asset/image/eclipseVersion.png)
 
 ### 3. Cài đặt XAMPP
 
 Để chạy server web (Apache) và quản lý cơ sở dữ liệu (MySQL), bạn cần cài đặt **XAMPP**. Tải XAMPP tại: [https://www.apachefriends.org/](https://www.apachefriends.org/) và làm theo hướng dẫn cài đặt.
 
-### 4. Tạo dự án Java Dynamic Web
+### 4. Clone dự án
 
-Sau khi cài đặt Eclipse và XAMPP, bạn cần tạo một dự án **Java Dynamic Web**. Làm theo các bước sau:
-
-**Bước 1: Tạo dự án mới**
-
-![image](https://github.com/user-attachments/assets/aeede3b7-76bc-4846-8d09-a37cf6291ef9)
-
-**Bước 2: Cấu hình dự án**
-
-![image](https://github.com/user-attachments/assets/9d769bd9-9d28-4c17-bcf9-d0cb77d7ab86)
-
-![image](https://github.com/user-attachments/assets/76d1e247-b83e-408c-aec3-c889e0fc0f70)
-
-![image](https://github.com/user-attachments/assets/00657433-3949-4a32-bfea-ebc236ba2923)
-
-### 5. Clone dự án
 ```
-git clone https://github.com/stealavie/Math-Tool.git
+https://github.com/BoPDA1607/PdfToDocx
 ```
 
----
+**Hướng dẫn chi tiết**
+
+![video](./asset/video/tutorial.mp4)
 
 ## Chúc may mắn
-
 Chúc bạn thành công trong việc triển khai và phát triển hệ thống! 
----
+
