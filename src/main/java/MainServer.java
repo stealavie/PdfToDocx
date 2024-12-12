@@ -12,6 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class MainServer {
     static BlockingQueue<Socket> queue = new LinkedBlockingQueue<Socket>();
@@ -85,21 +86,27 @@ class clientHandler implements Runnable {
 
                         String pdfPath = subfolderPath + File.separator + id + ".pdf";
                         File pdfFile = new File(pdfPath);
-                        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(pdfFile));
-                        int c;
-                        do {
-                            c = dis.readInt();
-                            bos.write(c);
-                        } while (c != -1);
-                        bos.close();
+                        try (
+                                BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
+                                FileOutputStream fos = new FileOutputStream(pdfFile)) {
+
+                            byte[] buffer = new byte[1024]; 
+                            int bytesRead;
+                            while ((bytesRead = bis.read(buffer)) != -1) {
+                                fos.write(buffer, 0, bytesRead); // Write the received data to the output file
+                            }
+                            fos.close();
+                            bis.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                        	dis.close();
+                            socket.close(); // Close the socket after receiving the file
+                        }
 
                         user u = new user(id, id_u, pdfFile.getAbsolutePath());
                         queueUsers.add(u);
                         System.out.println("User added");
-                        dis.close();
-
-                        socket.close();
-
                     } else if (message.equals("LAYNHIEU")) {
                         int lengthHistory = dis.readInt();
                         System.out.println("lengthHistory: " + lengthHistory);
@@ -126,7 +133,7 @@ class clientHandler implements Runnable {
                                     u1.isSent = 1;
                                 }
                                 if (u1.status == -1) {
-                                    sendDocxBacktoServer(dos, u1.docxPath);
+                                    sendDocxBacktoServer(socket, u1.docxPath);
                                     u1.status = 1;
                                     System.out.println("docxFile sent back to the client.");
                                 }
@@ -148,21 +155,25 @@ class clientHandler implements Runnable {
         }
     }
 
-    private void sendDocxBacktoServer(DataOutputStream dos, String docxPath) {
-        try {
-            File docxFile = new File(docxPath);
-            int c;
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(docxFile));
-            do {
-                c = bis.read();
-                dos.writeInt(c);
-                dos.flush();
-            } while (c != -1);
+    private void sendDocxBacktoServer(Socket socket, String docxPath) throws IOException {
+    	try (
+                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(new File(docxPath)));
+                BufferedOutputStream dos = new BufferedOutputStream(socket.getOutputStream())) {
+
+            byte[] buffer = new byte[1024]; 
+            int bytesRead;
+            while ((bytesRead = bis.read(buffer)) != -1) {
+                dos.write(buffer, 0, bytesRead); // Write the data to the output stream in chunks
+                dos.flush(); 
+            }
             bis.close();
+            dos.close();
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
+        } finally {
+            socket.close(); // Close the socket at the end of the transfer
         }
-
     }
 }
 
@@ -179,7 +190,7 @@ class DataHandler implements Runnable {
             if (!queueUsers.isEmpty()) {
                 try {
                     for (user i : queueUsers) {
-                        if (i.status == 1) {
+                        if (i.status == 1 || i.status == -1) {
                             continue;
                         }
                         File folder = new File("result");
@@ -198,6 +209,7 @@ class DataHandler implements Runnable {
                         File docxFile = new File(docxPath);
                         if (convertPdfToDocx(new File(i.pdfPath), docxFile.getAbsolutePath())) {
                             i.docxPath = docxFile.getAbsolutePath();
+                            System.out.println(i.docxPath);
                             i.status = -1;
                         }
                     }

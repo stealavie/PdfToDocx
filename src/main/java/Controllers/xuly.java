@@ -103,20 +103,22 @@ public class xuly extends HttpServlet {
                 dos.writeInt(i.getUserId());
 
                 int status = dis.readInt();
-                if (status == 0)
+                if (status == 0) {
+                    soc.close();
                     continue;
+                }     
                 else if (status == -1 && i.getStatus() != -1) {
                     i.setStatus(status);
                     conversionHistoryBO.update(i.getId(), i.getStatus(), "", i.getConversionTime());
-                    i.setDocxPath(getDocxFileFromServer2(dis, i.getUserId(), i.getId()));
+                    i.setDocxPath(getDocxFileFromServer2(soc, i.getUserId(), i.getId()));
                     i.setConversionTime(new Date(System.currentTimeMillis()));
                     conversionHistoryBO.update(i.getId(), i.getStatus(), i.getDocxPath(), i.getConversionTime());
                 } else if (status == 1) {
                     i.setStatus(status);
                     conversionHistoryBO.update(i.getId(), i.getStatus(), i.getDocxPath(), i.getConversionTime());
+                    soc.close();
                 }
             }
-            soc.close();
             return history;
         } catch (Exception e) {
             System.out.println("ngu1");
@@ -124,8 +126,7 @@ public class xuly extends HttpServlet {
         }
     }
 
-    private String getDocxFileFromServer2(DataInputStream dis, int u_id, int id) {
-        int c;
+    private String getDocxFileFromServer2(Socket socket, int u_id, int id) throws IOException {
         String docxPath = getServletContext().getRealPath("") + File.separator + "docx";
         File docxDir = new File(docxPath);
         if (!docxDir.exists()) {
@@ -141,15 +142,23 @@ public class xuly extends HttpServlet {
         String userDocxPath = userPath + File.separator + id + ".docx";
         File docxFile = new File(userDocxPath);
 
-        try {
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(docxFile));
-            do {
-                c = dis.readInt();
-                bos.write(c);
-            } while (c != -1);
-            bos.close();
-        } catch (Exception e) {
-            System.out.println("error in getting dox file");
+        try (
+                BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
+                FileOutputStream fos = new FileOutputStream(docxFile)) {
+
+            byte[] buffer = new byte[1024]; 
+            int bytesRead;
+            while ((bytesRead = bis.read(buffer)) != -1) {
+                fos.write(buffer, 0, bytesRead); // Write the chunk to the output file
+            }
+            System.out.println("docxFile received from the server.");
+            fos.close();
+            bis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            socket.close(); // Close the socket after receiving the file
         }
         return docxFile.getAbsolutePath();
     }
@@ -239,18 +248,20 @@ public class xuly extends HttpServlet {
     private void sendFileToSecondServer(Socket socket, File uploadedFile) throws IOException {
         try (
                 BufferedInputStream bis = new BufferedInputStream(new FileInputStream(uploadedFile));
-                DataOutputStream dos = new DataOutputStream(socket.getOutputStream())) {
+                BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream())) {
 
-            int c;
-            do {
-                c = bis.read();
-                dos.writeInt(c);
-                dos.flush();
-            } while (c != -1);
+            byte[] buffer = new byte[1024]; 
+            int bytesRead;
+            while ((bytesRead = bis.read(buffer)) != -1) {
+                bos.write(buffer, 0, bytesRead); // Write the data to the output stream in chunks
+                bos.flush(); 
+            }
             bis.close();
-            dos.close();
-            socket.close();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            socket.close(); // Close the socket at the end of the transfer
         }
     }
-
 }

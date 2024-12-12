@@ -1,6 +1,7 @@
 package Controllers;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -48,12 +49,14 @@ public class download extends HttpServlet {
 
         // Read the file and stream it to the client
         try {
-            int c;
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(docx_path));
-            do {
-                c = bis.read();
-                response.getOutputStream().write(c);
-            } while (c != -1);
+            BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+            byte[] buffer = new byte[1024]; // Buffer to hold chunks of received data
+            int bytesRead;
+            while ((bytesRead = bis.read(buffer)) != -1) {
+                bos.write(buffer, 0, bytesRead); // Write the chunk to the output file
+            }
+            bos.close();
             bis.close();
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error reading the file");

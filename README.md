@@ -45,7 +45,13 @@ Cài đặt **XAMPP** để chạy Apache server và quản lý cơ sở dữ li
 1. Truy cập [XAMPP Downloads](https://www.apachefriends.org/).
 2. Làm theo hướng dẫn cài đặt.
 
-### 4. Clone Dự Án
+### 4. Mở Xampp Controller Panel:
+
+![Xampp](./asset/image/xampp.png)
+
+![ApacheMySQL](./asset/image/apachesql.png)
+
+### 5. Clone Dự Án
 
 Clone mã nguồn từ GitHub về máy:
 
@@ -55,6 +61,9 @@ git clone https://github.com/BoPDA1607/PdfToDocx
 
 **Hướng dẫn chi tiết**: [Video hướng dẫn](https://youtu.be/AJlqkaTask8)
 
----
+### 6. Chạy Server xử lý
+
+![MainServer](./asset/image/mainServer.png)
 
 Chúc bạn thành công khi triển khai hệ thống!
+---
