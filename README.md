@@ -56,7 +56,7 @@ Cài đặt **XAMPP** để chạy Apache server và quản lý cơ sở dữ li
 Clone mã nguồn từ GitHub về máy:
 
 ```
-git clone https://github.com/BoPDA1607/PdfToDocx
+git clone https://github.com/stealavie/PdfToDocx.git
 ```
 
 **Hướng dẫn chi tiết**: [Video hướng dẫn](https://youtu.be/AJlqkaTask8)
